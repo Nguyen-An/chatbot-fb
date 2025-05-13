@@ -84,7 +84,7 @@ class ChatbotService:
         yield f"data: {json.dumps(end)}\n\n"
 
 
-    async def chat_messenger_api(self, messageChatAPI: MessageChatAPI):
+    async def chat_messenger_api(messageChatAPI: MessageChatAPI):
         message = messageChatAPI.mes
         thread_id = messageChatAPI.thread_id
 
@@ -114,7 +114,7 @@ class ChatbotService:
 
         # Polling: Đợi assistant xử lý xong
         while run.status not in ["completed", "failed", "cancelled", "expired"]:
-            await asyncio.sleep(2)
+            await asyncio.sleep(1)
             run = await client.beta.threads.runs.retrieve(
                 thread_id=thread_id,
                 run_id=run.id
@@ -141,7 +141,4 @@ class ChatbotService:
             if part.type == "text":
                 full_text += part.text.value
 
-        return {
-            "thread_id": thread_id,
-            "message": full_text.strip()
-        }
+        return full_text.strip()

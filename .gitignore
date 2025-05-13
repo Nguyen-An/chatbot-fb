@@ -1,0 +1,6 @@
+__pycache__/
+statics/
+data/
+.venv/
+.env
+.codegpt
